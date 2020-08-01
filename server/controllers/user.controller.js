@@ -11,6 +11,7 @@ const transport = nodemailer.createTransport({
         pass: process.env.SENDINBLUE_PASSWORD
     }
 })
+
 exports.signUp = (req, res)=>{
     const {
         fName,
@@ -143,5 +144,37 @@ exports.activateAccount = (req, res) => {
   };
   
 exports.signIn = (req, res) => {
-    res.send("welcome")
-}
+    const { email, password } = req.body;
+  
+    User.findOne({ email }).exec((err, user) => {
+      if (err || !user) {
+        return res.status(400).json({
+          error: "User with the email specified doesn't exist.",
+        });
+      }
+  
+      if (!user.authenticate(password)) {
+        return res.status(400).json({
+          error: "Password is incorrect",
+        });
+      }
+  
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+      });
+  
+      const { _id, fName, lName, role, email } = user;
+  
+      return res.json({
+        token,
+        user: {
+          _id,
+          fName,
+          lName,
+          role,
+          email,
+        },
+        message: "Signed in successfully",
+      });
+    });
+  };
