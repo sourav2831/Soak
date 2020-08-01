@@ -141,7 +141,7 @@ exports.activateAccount = (req, res) => {
     return res.status(401).json({
       error: "The token is invalid",
     });
-  };
+};
   
 exports.signIn = (req, res) => {
     const { email, password } = req.body;
@@ -177,4 +177,54 @@ exports.signIn = (req, res) => {
         message: "Signed in successfully",
       });
     });
-  };
+};
+
+exports.forgotPassword = (req, res) => {
+  const { email } = req.body;
+
+  User.findOne({ email }).exec((err, user) => {
+    if (err || !user) {
+      return res.status(400).json({
+        error: "User doesn't exist.",
+      });
+    }
+
+    const token = jwt.sign({ _id: user._id, fName: user.fName }, process.env.JWT_RESET_PASSWORD, {
+      expiresIn: "10m",
+    });
+
+    const link = `${process.env.CLIENT_URL}/auth/password/reset/${token}`;
+
+    const emailData = {
+      from: process.env.EMAIL_FROM,
+      to: email,
+      subject: "Password Reset Link",
+      html: `
+        <h1>Please use the following link to reset your password:</h1>
+        <a href="${link}" target="_blank">${link}</a>
+      `,
+    };
+
+    return user.updateOne({ resetPasswordLink: token }).exec((err, success) => {
+      if (err) {
+        return res.status(400).json({
+          error: "There was an error in saving the reset password link",
+        });
+      }
+
+      transport
+        .sendMail(emailData)
+        .then(() => {
+          return res.json({
+            message: `Email has been successfully sent to ${email}`,
+          });
+        })
+        .catch((err) => {
+          return res.status(400).json({
+            error: "There was an error in sending the email.",
+          });
+        });
+    });
+  });
+};
+  
