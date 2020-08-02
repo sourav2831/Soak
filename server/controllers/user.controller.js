@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer")
+const _ = require("lodash")
 const User = require("../models/user.model")
 require("dotenv").config()
 
@@ -225,6 +226,51 @@ exports.forgotPassword = (req, res) => {
           });
         });
     });
+  });
+};
+
+exports.resetPassword = (req, res) => {
+  const { resetPasswordLink, newPassword } = req.body;
+
+  if (resetPasswordLink) {
+    return jwt.verify(resetPasswordLink, process.env.JWT_RESET_PASSWORD, (err) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Expired link. Try again.",
+        });
+      }
+
+      User.findOne({ resetPasswordLink }).exec((err, user) => {
+        if (err || !user) {
+          return res.status(400).json({
+            error: "Somethig went wrong. Try later",
+          });
+        }
+
+        const updateFields = {
+          password: newPassword,
+          resetPasswordLink: "",
+        };
+
+        user = _.extend(user, updateFields);
+ 
+        user.save((err) => {
+          if (err) {
+            return res.status(400).json({
+              error: err, 
+            });
+          }
+
+          return res.json({
+            message: "Great! The password has reset.",
+          });
+        });
+      });
+    });
+  }
+
+  return res.status(400).json({
+    error: "We have not received the reset password link",
   });
 };
   
