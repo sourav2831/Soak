@@ -44,6 +44,22 @@ const UserSchema = new Schema({
     data: String,
     default:""
   },
+  imageName: {
+    type: String,
+    default: "blank-profile-picture-973460_640.png",
+  },
+  bio: {
+    type: String,
+    trim: true,
+  },
+  website: {
+    type: String,
+    trim: true,
+  },
+  location: {
+    type: String,
+    trim: true,
+  }
 }, { timestamps: true })
 
 UserSchema.methods = {
@@ -69,13 +85,8 @@ UserSchema.methods = {
 
 UserSchema.virtual("password")
   .set(function (password) {
-    // temporary variable called password
     this._password = password;
-
-    // generate salt and save it in our database
     this.salt = this.makeSalt();
-
-    // encrypt the password
     this.hashed_password = this.encryptPassword(password);
   })
   .get(function () {

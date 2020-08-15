@@ -3,7 +3,10 @@ const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 const morgan = require("morgan")
 const cors = require("cors")
+const methodOverride = require('method-override');
 const userRoutes = require("./server/routes/user.route")
+const postRoutes = require("./server/routes/post.route")
+const imageRoutes = require("./server/routes/image.route")
 require("dotenv").config()
 const app = express()
 
@@ -15,6 +18,7 @@ const isDevelopment = NODE_ENV === "development"
 app.set("view engine", "ejs")
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'));
 
 if (isDevelopment) {
   app.use(morgan("dev"))
@@ -28,6 +32,8 @@ if (isDevelopment) {
   app.use(cors());
 }
 
+app.use("/uploads", express.static("server/uploads"));
+
 mongoose
   .connect(DATABASE_URL, {
     useCreateIndex: true,
@@ -36,7 +42,9 @@ mongoose
     useNewUrlParser: true,
   })
   .then(() => {
-    app.use("/api",userRoutes)
+    app.use("/api", userRoutes)
+    app.use("/api", postRoutes)
+    app.use("/api", imageRoutes)
     app.listen(PORT, () => {
       console.log(`DB connected and the server is runnning at ${PORT}-${NODE_ENV}`);
     });
