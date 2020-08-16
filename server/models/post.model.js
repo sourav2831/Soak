@@ -4,11 +4,9 @@ const PostSchema = new Schema({
     imageName: {
         type: String,
       },
-      imageData: {
-          type: String,
-      },
     caption: {
         type: String,
+        trim:true,
         max: 300,
     },
     userName: {
@@ -18,6 +16,15 @@ const PostSchema = new Schema({
     },
     createdAt:{
         type: String,
+    },
+    comments: [],
+    like: {
+        type: Number,
+        default:0
+    },
+    comment: {
+        type: Number,
+        default:0
     }
 })
 

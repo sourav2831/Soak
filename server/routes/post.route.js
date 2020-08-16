@@ -11,7 +11,7 @@ const conn = mongoose.createConnection(process.env.DATABASE_URL,{
 const multer = require("multer");
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
-const { getPosts } = require("../controllers/post.controller")
+const { getPosts, addComments, likeUnlikePost } = require("../controllers/post.controller")
 const Post = require("../models/post.model")
 const User = require("../models/user.model")
 const router = express.Router();
@@ -85,5 +85,8 @@ router.post('/user/post', upload.single('myImage'), (req, res) => {
 
 router.get("/user/get", getPosts)
 
+router.post("/user/:postId", addComments)
+
+router.post("/user/:postId/like",likeUnlikePost)
 
 module.exports = router
