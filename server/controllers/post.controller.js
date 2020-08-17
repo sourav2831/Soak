@@ -1,6 +1,5 @@
 const Post = require("../models/post.model")
 const User = require("../models/user.model")
-const _ = require("lodash")
 
 exports.getPosts = (req, res) => {
     Post.find({},null, { sort: { createdAt: -1 } }, (err, post) => {
@@ -34,10 +33,22 @@ exports.addComments = (req, res) => {
                 error:"Post does not exist!!"
             })
         }
-        Post.updateMany({ _id: postId },{$push: { comments: { $each: [comments], $position: 0 } }, $inc: { comment: 1 } }, (err, post) => {
+        Post.updateMany({ _id: postId },{$push: { comments: { $each: [comments], $position: 0 } }, $inc: { comment: 1 } }, (err, __) => {
             if (err) {
                 return res.json({
                     error:err
+                })
+            }
+            if (post[0].userName !== userName) {
+                const notification = {
+                    newNotification:`${userName} has commented on your post`
+                }
+                User.updateOne({ userName: post[0].userName }, { $push: { notifications: { $each: [notification], $position: 0 } } },(err, user)=> {
+                    if (err) {
+                        return res.json({
+                            error:"Something went wrong!!"
+                        })
+                    }
                 })
             }
             return res.status(200).json({
@@ -54,7 +65,7 @@ exports.likeUnlikePost = (req, res) => {
     const likedPost = {
         postId:postId
     }
-    User.find({ "likedPost.postId": postId }, (err, user) => {
+    User.find({ userName:userName,"likedPost.postId": postId }, (err, user) => {
         if (err) {
             return res.json({
                 error:"Something went wrong!!"
@@ -87,14 +98,34 @@ exports.likeUnlikePost = (req, res) => {
                         error:err
                     })
                 }
-                Post.updateOne({ _id: postId }, { $inc: { like: 1 } }, (err, post) => {
+                Post.find({ _id: postId }, (err, post) => {
                     if (err) {
                         return res.json({
-                            error:"Something went wrong!!"
+                            error:"Post does not exist!!"
                         })
                     }
-                    return res.status(200).json({
-                        message:"Like incremented successfully"
+                    Post.updateOne({ _id: postId }, { $inc: { like: 1 } }, (err, __) => {
+                        if (err) {
+                            return res.json({
+                                error:"Something went wrong!!"
+                            })
+                        }
+                        if (post[0].userName !== userName) {
+                            const notification = {
+                                newNotification:`${userName} has liked your post`
+                            }
+                            User.updateOne({ userName: post[0].userName }, { $push: { notifications: { $each: [notification], $position: 0 } } }, (err, user) => {
+                                if (err) {
+                                    return res.json({
+                                        error:"Something went wrong!!"
+                                    })
+                                }
+                            })
+                        }
+                        
+                        return res.status(200).json({
+                            message:"Like incremented successfully"
+                        })
                     })
                 })
             })
@@ -104,15 +135,22 @@ exports.likeUnlikePost = (req, res) => {
 
 exports.deletePost = (req, res) => {
     const { postId } = req.params
+    const { userName } = req.body
     Post.findOneAndDelete({ _id: postId }, (err) => {
         if (err) {
             return res.json({
                 error:"Something went wrong!!"
             })
         }
+        User.updateOne({ userName: userName }, { $pull: { likedPost: { postId: postId } } }, (err, user) => {
+            if (err) {
+                return res.json({
+                    error:"Something went wrong!!"
+                })
+            }
+        })
         return res.status(200).json({
             message:"Deleted successfully"
         })
     })
-    
 }

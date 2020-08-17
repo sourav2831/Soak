@@ -20,7 +20,19 @@ exports.signUp = (req, res)=>{
         email,
         password,
         userName
-    } = req.body
+  } = req.body
+  User.findOne({ userName: userName }, (err, user) => {
+    if (err) {
+      return res.status(401).json({
+          error:"Something went wrong!!"
+      })
+  }
+  if (user) {
+      return res.status(400).json({
+          error:"User name already exists!!"
+      })
+  }
+  })
     User.findOne({ email: email }, (err,user) => {
         if (err) {
             return res.status(401).json({
@@ -32,7 +44,6 @@ exports.signUp = (req, res)=>{
                 error:"Email already exists!!"
             })
         }
-
         const token=jwt.sign({
             fName,
             lName,
@@ -40,7 +51,7 @@ exports.signUp = (req, res)=>{
             password,
             userName
         }, process.env.JWT_ACCOUNT_ACTIVATION,
-            { expiresIn: "2m" }
+            { expiresIn: "10m" }
         )
         const activateLink=`${process.env.CLIENT_URL}/auth/activate/${token}`
         const emailData = {

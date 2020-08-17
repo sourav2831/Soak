@@ -11,6 +11,19 @@ exports.userDetails = (req, res) => {
         return res.status(200).json({
             message:"Saved Successfully"
         })
+    })  
+}
+
+exports.userNotifications = (req, res) => {
+    const { userName } = req.body
+    User.find({userName:userName}).select({ "notifications": 1, "_id": 0}).exec((err, notification) => {
+        if (err) {
+            return res.json({
+                error:"Something went wrong!!"
+            })
+        }
+        return res.json({
+            notifications:notification
+        })
     })
-    
 }

@@ -1,6 +1,6 @@
 const express = require("express")
 const { signUp, signIn, activateAccount, forgotPassword, resetPassword } = require("../controllers/auth.controller")
-const { userDetails } = require("../controllers/userDetails.controller")
+const { userDetails, userNotifications } = require("../controllers/userDetails.controller")
 const { userSignupValidator, userSigninValidator } = require("../validators/auth.validator")
 
 const router = express.Router()
@@ -16,5 +16,7 @@ router.post("/user/forgot-password", forgotPassword)
 router.post("/user/reset-password", resetPassword)
 
 router.post("/user/details", userDetails)
+
+router.get("/user/notifications", userNotifications)
 
 module.exports = router
