@@ -59,7 +59,9 @@ const UserSchema = new Schema({
     type: String,
     trim: true,
   },
-  likedPost:[]
+  likedPost: [{
+    postId:String
+  }]
 }, { timestamps: true })
 
 UserSchema.methods = {

@@ -81,10 +81,10 @@ exports.likeUnlikePost = (req, res) => {
             
         }
         else {
-            User.updateOne({ userName: userName }, { $push: { likedPost: { $each: [likedPost], $position: 0 } } }, (err, user) => {
+            User.updateOne({ userName: userName }, { $push: { likedPost: likedPost }  } , (err, user) => {
                 if (err) {
                     return res.json({
-                        error:"Something went wrong!!"
+                        error:err
                     })
                 }
                 Post.updateOne({ _id: postId }, { $inc: { like: 1 } }, (err, post) => {
@@ -100,4 +100,19 @@ exports.likeUnlikePost = (req, res) => {
             })
         }
     })
+}
+
+exports.deletePost = (req, res) => {
+    const { postId } = req.params
+    Post.findOneAndDelete({ _id: postId }, (err) => {
+        if (err) {
+            return res.json({
+                error:"Something went wrong!!"
+            })
+        }
+        return res.status(200).json({
+            message:"Deleted successfully"
+        })
+    })
+    
 }
