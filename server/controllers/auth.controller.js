@@ -143,7 +143,7 @@ exports.activateAccount = (req, res) => {
             }
   
             res.json({
-              message: `Hey ${fName}, welcome to the app!!`,
+              message: `Hey ${fName}, welcome to the app!!. Please login now.`,
             });
           });
         });
