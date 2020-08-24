@@ -47,8 +47,7 @@ function Post(props) {
           <MyButton tip="comments" >
             <ChatIcon color="primary" />
           </MyButton>
-        <span>{comment} Comments</span>
-        <CommentForm comments={comments} userName={props.userName} postId={_id} />
+        <CommentForm comment={comment} comments={comments} userName={props.userName} postId={_id} />
       </CardContent>
     </Card>
   )

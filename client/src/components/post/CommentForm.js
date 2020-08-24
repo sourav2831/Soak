@@ -10,6 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 function CommentForm(props) {
   const classes = useStyles()
+  const [commentCount, setCommentCount] = useState(props.comment)
   const [comment, setComment] = useState("")
   const [newComment,setNewComment]=useState(props.comments)
   const [loading,setLoading]=useState(false)
@@ -25,10 +26,11 @@ function CommentForm(props) {
       userName:props.userName,
         comment: comment,
       createdAt:new Date().getTime()
-      }
+    }
     axios.post(`/api/user/post/${props.postId}`, userDetails)
       .then((res) => {
         setLoading(false)
+        setCommentCount(commentCount+1)
         setNewComment((prevComments) => {
           return [
             makeComment,
@@ -49,6 +51,7 @@ function CommentForm(props) {
   }
   return (
     <Fragment>
+      <span>{commentCount} Comments</span>
       <Comments comments={newComment}/>
             <Grid item sm={12} style={{ textAlign: 'center' }}>
         <form onSubmit={handleSubmit}>
