@@ -25,6 +25,7 @@ function DeletePost(props) {
     }
     axios.post(`/api/user/post/${props.postId}/delete`, userDetails)
       .then((res) => {
+        props.history.push("/")
         window.location.reload()
       })
       .catch((err) => {

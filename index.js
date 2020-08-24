@@ -46,6 +46,9 @@ mongoose
     app.use("/api", userRoutes)
     app.use("/api", postRoutes)
     app.use("/api", imageRoutes)
+    app.get("*", (req, res) => {
+      res.redirect("https://soak.herokuapp.com");
+    });
     app.listen(PORT, () => {
       console.log(`DB connected and the server is runnning at ${PORT}-${NODE_ENV}`);
     });

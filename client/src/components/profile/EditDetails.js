@@ -41,6 +41,7 @@ function EditDetails(props) {
     axios.post("/api/user/details", details)
       .then((res) => {
         setOpen(false)
+        props.history.push("/")
         window.location.reload()
       })
       .catch((err) => {
