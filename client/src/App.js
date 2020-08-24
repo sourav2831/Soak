@@ -53,7 +53,7 @@ function App() {
         />
         <PublicRoute
           restricted
-          path="/auth/password/forgot"
+          path="/forgot"
           exact
           component={Forgot}
         />
