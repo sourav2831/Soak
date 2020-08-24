@@ -6,13 +6,13 @@ import "react-toastify/dist/ReactToastify.min.css";
 
 const Reset = ({ match }) => {
   const [values, setValues] = useState({
-    name: "",
-    token: "",
+    name: "", 
+    token: "", 
     newPassword: "",
     buttonText: "Reset password",
   });
 
-  useEffect(() => {
+  useEffect(() => { 
     let token = match.params.token;
     let { fName } = jwt.decode(token);
     if (token) {

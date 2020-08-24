@@ -6,7 +6,6 @@ import MyButton from '../../util/MyButton';
 import useStyles from "../../util/theme"
 import LikeButton from './LikeButton';
 import DeletePost from './DeletePost';
-import Comments from './Comments'
 import CommentForm from './CommentForm'
  
 import Card from '@material-ui/core/Card';
@@ -49,8 +48,7 @@ function Post(props) {
             <ChatIcon color="primary" />
           </MyButton>
         <span>{comment} Comments</span>
-        <Comments comments={comments} />
-        <CommentForm userName={props.userName} postId={_id} />
+        <CommentForm comments={comments} userName={props.userName} postId={_id} />
       </CardContent>
     </Card>
   )

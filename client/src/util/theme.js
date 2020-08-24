@@ -59,7 +59,7 @@ const useStyles = makeStyles({
     marginTop: 10
   },
   progress: {
-    position: 'absolute'
+    position: 'absolute',
     },
     invisibleSeparator: {
       border: 'none',

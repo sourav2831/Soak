@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import useStyles from '../../util/theme'
 import axios from 'axios'
+import Comments from './Comments'
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 function CommentForm(props) {
   const classes = useStyles()
   const [comment, setComment] = useState("")
+  const [newComment,setNewComment]=useState(props.comments)
   const [loading,setLoading]=useState(false)
 
   function handleSubmit(event) {
@@ -19,11 +21,22 @@ function CommentForm(props) {
       userName: props.userName,
       comment:comment
     }
+    const makeComment = {
+      userName:props.userName,
+        comment: comment,
+      createdAt:new Date().getTime()
+      }
     axios.post(`/api/user/post/${props.postId}`, userDetails)
       .then((res) => {
         setLoading(false)
+        setNewComment((prevComments) => {
+          return [
+            makeComment,
+            ...prevComments
+          ]
+        })
         setComment("")
-        window.location.reload()
+        // window.location.reload()
       })
       .catch((err) => {
       console.log(err);
@@ -36,6 +49,7 @@ function CommentForm(props) {
   }
   return (
     <Fragment>
+      <Comments comments={newComment}/>
             <Grid item sm={12} style={{ textAlign: 'center' }}>
         <form onSubmit={handleSubmit}>
           <TextField
