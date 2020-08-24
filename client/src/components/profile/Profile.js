@@ -10,12 +10,14 @@ import EditDetails from './EditDetails'
 import Typography from '@material-ui/core/Typography';
 import MuiLink from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import EditIcon from '@material-ui/icons/Edit';
 import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
+
 
 function Profile(props) {
   const classes = useStyles()
@@ -103,7 +105,12 @@ function Profile(props) {
       </div>
     </Paper>
   ): (
-    <div>loading...</div>
+    (
+      <CircularProgress
+        size={100}
+        className={classes.progressSpinner2}
+      />
+    )
   );
 
   return profile
