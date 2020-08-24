@@ -12,7 +12,7 @@ const app = express()
 
 const { NODE_PORT, DATABASE_URL,NODE_ENV } = process.env
 
-const PORT = NODE_PORT || 8000
+const PORT = process.env.PORT || NODE_PORT
 const isDevelopment = NODE_ENV === "development"
 
 app.set("view engine", "ejs")
