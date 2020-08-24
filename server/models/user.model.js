@@ -46,7 +46,7 @@ const UserSchema = new Schema({
   },
   imageName: {
     type: String,
-    default:"a894df71af6080366eb3121af0a9f9e5.png"
+    default:"653ce3e22a901e8d743b56f219cf3208.png"
   },
   bio: {
     type: String,
