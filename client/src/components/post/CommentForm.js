@@ -23,7 +23,6 @@ function CommentForm(props) {
       .then((res) => {
         setLoading(false)
         setComment("")
-        props.history.push("/")
         window.location.reload()
       })
       .catch((err) => {

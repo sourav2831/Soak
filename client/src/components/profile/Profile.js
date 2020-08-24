@@ -30,7 +30,6 @@ function Profile(props) {
     axios.post("/api/image-upload", formData)
       .then((res) => {
         setLoading(false)
-        props.history.push("/")
         window.location.reload();
       })
       .catch((err) => {
