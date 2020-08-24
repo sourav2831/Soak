@@ -13,10 +13,10 @@ exports.userDetails = (req, res) => {
         })
     })  
 }
-
+ 
 exports.userNotifications = (req, res) => {
-    const { userName } = req.body
-    User.find({userName:userName}).select({ "notifications": 1, "_id": 0}).exec((err, notification) => {
+    const { _id } = req.params
+    User.find({_id:_id}).select({ "notifications": 1, "_id": 0}).exec((err, notification) => {
         if (err) {
             return res.json({
                 error:"Something went wrong!!"

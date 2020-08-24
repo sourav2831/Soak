@@ -78,17 +78,39 @@ router.post('/user/post', upload.single('myImage'), (req, res) => {
       }
       return res.json({
           message:"Post saved successfully"
-      })
+      }) 
   })
 });
-  })
+})
+  
+router.get('/user/image/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
 
-router.get("/user/get", getPosts)
+    // Check if image
+    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+      // Read output to browser
+      const readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: 'Not an image'
+      });
+    }
+  });
+});
 
-router.post("/user/:postId", addComments)
+router.get("/user/post/get", getPosts) 
 
-router.post("/user/:postId/like", likeUnlikePost)
+router.post("/user/post/:postId", addComments)
 
-router.post("/user/:postId/delete", deletePost)
+router.post("/user/post/:postId/like", likeUnlikePost)
 
-module.exports = router
+router.post("/user/post/:postId/delete", deletePost)
+
+module.exports = router  

@@ -75,7 +75,7 @@ exports.likeUnlikePost = (req, res) => {
             User.updateOne({ userName: userName }, { $pull: { likedPost: { postId: postId } } }, (err, user) => {
                 if (err) {
                     return res.json({
-                        error:"Something went wrong!!"
+                        error:"Something went wrong!!" 
                     })
                 }
                 Post.updateOne({ _id: postId }, { $inc: { like: -1 } }, (err, post) => {

@@ -46,6 +46,7 @@ const UserSchema = new Schema({
   },
   imageName: {
     type: String,
+    default:"a894df71af6080366eb3121af0a9f9e5.png"
   },
   bio: {
     type: String,
@@ -62,7 +63,8 @@ const UserSchema = new Schema({
   likedPost: [{
     postId:String
   }],
-  notifications:[]
+  notifications: [],
+
 }, { timestamps: true })
 
 UserSchema.methods = {

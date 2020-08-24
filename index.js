@@ -12,7 +12,7 @@ const app = express()
 
 const { NODE_PORT, DATABASE_URL,NODE_ENV } = process.env
 
-const PORT = NODE_PORT || 3000
+const PORT = NODE_PORT || 8000
 const isDevelopment = NODE_ENV === "development"
 
 app.set("view engine", "ejs")
@@ -24,6 +24,7 @@ if (isDevelopment) {
   app.use(morgan("dev"))
 }
 else {
+  app.use(express.static("client/build"))
   app.use(morgan("combined"))
 }
 if (isDevelopment) {

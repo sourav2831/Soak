@@ -284,4 +284,41 @@ exports.resetPassword = (req, res) => {
     error: "We have not received the reset password link",
   });
 };
-  
+
+exports.getUser = (req, res) => {
+  const { _id } = req.params
+  User.findOne({ _id: _id }, (err, user) => {
+    if (err) {
+      return res.json({
+        error:"Something went wrong!!"
+      })
+    }
+    if (!user) {
+      return res.status(400).json({
+        error:"User not found"
+      })
+    } 
+    return res.status(200).json({
+      userData:user
+    })
+  })
+} 
+
+exports.getUserByUserName = (req, res) => {
+  const { userName } = req.params
+  User.findOne({ userName: userName }, (err, user) => {
+    if (err) {
+      return res.json({
+        error:"Something went wrong!!"
+      })
+    }
+    if (!user) {
+      return res.status(400).json({
+        error:"User not found"
+      })
+    } 
+    return res.status(200).json({
+      userData:user
+    })
+  })
+}
