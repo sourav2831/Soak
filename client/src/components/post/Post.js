@@ -50,7 +50,7 @@ function Post(props) {
           </MyButton>
         <span>{comment} Comments</span>
         <Comments comments={comments} />
-        <CommentForm userName={userName} postId={_id} />
+        <CommentForm userName={props.userName} postId={_id} />
       </CardContent>
     </Card>
   )
