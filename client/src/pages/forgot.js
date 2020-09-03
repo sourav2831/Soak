@@ -105,7 +105,7 @@ function Forgot(props) {
             </Button>
           <br/>
             <small>
-              Dont have an account ? sign up <Link to="/signup">here</Link>
+              Dont have an account ? sign up <Link to="/signup">here</Link>  
             </small>
         </form>
       </Grid>

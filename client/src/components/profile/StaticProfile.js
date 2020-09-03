@@ -47,7 +47,7 @@ const StaticProfile = ({ match }) => {
 
   const userProfile = () => (
     <Grid container spacing={16}>
-    <Grid item sm={4} xs={12} />
+    <Grid item sm={4} />
     <Grid item sm={4} xs={12}>
     <Paper className={classes.paper}>
       <div className={classes.profile}>

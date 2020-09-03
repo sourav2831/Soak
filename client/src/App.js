@@ -9,6 +9,7 @@ import Activate from './pages/activate';
 import Forgot from './pages/forgot';
 import Reset from './pages/reset';
 import AddPost from './components/post/AddPost'
+import Profile from './components/profile/Profile'
 import Dashboard from './pages/dashboard';
 import StaticProfile from './components/profile/StaticProfile'
 import PublicRoute from './components/routes/PublicRoute'
@@ -43,7 +44,8 @@ function App() {
         <PublicRoute restricted path="/" exact component={Home} />
         <PublicRoute restricted path="/signup" exact component={Signup} />
         <PublicRoute restricted path="/login" exact component={Login} />
-        <PublicRoute path="/add-post" exact component={AddPost} />
+        <PrivateRoute path="/add-post" exact component={AddPost} />
+        <PrivateRoute path="/profile" exact component={Profile} />    
         <PublicRoute path="/users/:userName" exact component={StaticProfile} />
         <PublicRoute
           restricted

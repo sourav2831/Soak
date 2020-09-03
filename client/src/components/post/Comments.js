@@ -28,7 +28,7 @@ function Comments(props) {
                   <Grid item sm={9}>
                     <div className={classes.commentData}>
                       <Typography
-                        variant="h5"
+                        variant="h7"
                         component={Link}
                         to={`/users/${comment.userName}`}
                         color="primary"
@@ -38,8 +38,9 @@ function Comments(props) {
                       <Typography variant="body2" color="textSecondary">
                         {dayjs(Number(comment.createdAt)).format('h:mm a, MMMM DD YYYY')}
                       </Typography>
+                      <Typography variant="h7">{comment.comment}</Typography>
                       <hr className={classes.invisibleSeparator} />
-                      <Typography variabnt="body1">{comment.comment}</Typography>
+                      <hr className={classes.invisibleSeparator} />
                     </div>
                   </Grid>
                 </Grid>

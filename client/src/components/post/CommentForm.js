@@ -71,7 +71,7 @@ function CommentForm(props) {
             className={classes.button}
             disabled={loading}
           >
-            Submit
+            Comment
             {loading && (
                 <CircularProgress size={30} className={classes.progress} />
             )}

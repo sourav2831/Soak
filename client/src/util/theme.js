@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   card: {
     margin:"auto",
     position: 'relative',
-    maxWidth:400,
+    maxWidth:500,
     marginBottom: 20
   },
   imagePost: {
@@ -39,6 +39,13 @@ const useStyles = makeStyles({
   image2: {
     margin: '10px auto 10px auto',
     borderRadius:"50%"
+  },
+  image3: {
+    width: 35,
+    height: 35,
+    objectFit: 'cover',
+    maxWidth: '100%',
+    borderRadius: '50%'
   },
   pageTitle: {
     margin: '10px auto 10px auto'
@@ -193,8 +200,8 @@ const useStyles = makeStyles({
   },
   progressSpinner2: {
     position: 'absolute',
-    bottom: "25%",
-    left:"40%"
+    bottom: "35%",
+    left:"50%"
   },
 });
 

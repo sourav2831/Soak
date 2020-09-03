@@ -89,7 +89,7 @@ function Login(props) {
               className={classes.textField}
               helperText={JSON.stringify(errors) === '{}'?errors.error:errors.error.email}
               error={JSON.stringify(errors) === '{}'?false:errors.error.email ? true : false}
-              value={credentials.email}
+              value={credentials.email} 
               onChange={handleChange}
               fullWidth
           />

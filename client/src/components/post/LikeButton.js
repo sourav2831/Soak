@@ -72,7 +72,7 @@ function LikeButton(props) {
           <MyButton >
       <FavoriteIcon color="primary" />
       </MyButton>
-          <span >{like} Likes</span>
+          <span >{like} Likes</span> 
           <CircularProgress size={30} className={classes.progress} />
         </Fragment>
           )

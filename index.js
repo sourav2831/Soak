@@ -33,8 +33,6 @@ if (isDevelopment) {
   app.use(cors());
 }
 
-app.use("/uploads", express.static("server/uploads"));
-
 mongoose
   .connect(DATABASE_URL, {
     useCreateIndex: true,

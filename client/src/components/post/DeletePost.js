@@ -34,7 +34,7 @@ function DeletePost(props) {
   return (
     <Fragment>
     <MyButton
-      tip="Delete Scream"
+      tip="Delete Post"
       onClick={handleOpen}
       btnClassName={classes.deleteButton}
     >

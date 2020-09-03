@@ -27,13 +27,13 @@ function Post(props) {
   return (
     <Card className={classes.card}>
       <CardMedia 
-        image={`/api/user/image/${imageName}`}
+        image={`/api/user/image/${imageName}`}  
         title="Post image"
         className={classes.imagePost}
       />
       <CardContent className={classes.content}>
       <Typography
-            variant="h5"
+            variant="h6"
             component={Link}
             to={`/users/${userName}`}
             color="primary"
