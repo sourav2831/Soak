@@ -12,9 +12,15 @@ body {
 .nav-container {
   
 }
+.nav-container .nav-container2 { 
+  margin-right: 30%;
+}
 
 .nav-container svg {
   color: #fff;
+}
+@media only screen and (max-width: 700px) {
+  .nav-container .nav-container2 { margin-right: 0%;}
 }
 a {
   text-decoration: none;

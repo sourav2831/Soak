@@ -25,7 +25,7 @@ function Navbar(props) {
   return (
     <AppBar>
       <Toolbar className="nav-container">
-      <Button color = "inherit" component = { Link } to = "/" style={{marginRight:"30%"}}>
+      <Button color = "inherit" component = { Link } to = "/" className="nav-container2"> 
           <img src={AppIcon} alt="Soak Icon" className={classes.image3} />
           <span style={{padding:"10px"}}>Soak</span>
       </Button>
